@@ -1,885 +1,349 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
-  Sparkles,
-  Zap,
-  ShieldCheck,
-  Brain,
-  Layers,
-  FileStack,
-  ScanText,
-  GitCompare,
-  Languages,
-  Check,
-  Star,
-  Upload,
-  FileText,
+  BarChart3,
+  BriefcaseBusiness,
   ChevronRight,
-  Lock,
-  Eye,
-  Wand2,
+  Cloud,
+  FileText,
+  Layers3,
+  LockKeyhole,
+  Network,
+  Plus,
+  Rocket,
+  Sparkles,
+  Store,
+  Workflow,
+  Zap,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Navbar } from '@/components/navbar';
-import { CommandPalette } from '@/components/command-palette';
-import { useCommandPalette } from '@/hooks/use-command-palette';
-import { categories, tools, getToolsByCategory } from '@/lib/tools';
-import { cn } from '@/lib/utils';
 
-export default function LandingPage() {
-  const cmd = useCommandPalette();
+const products = [
+  {
+    name: 'SZ TOOLS',
+    label: 'Document Workspace',
+    description:
+      'A complete business document workspace with PDF tools, AI document intelligence, editing, workflows, files, and team-ready utilities.',
+    href: '/tools',
+    icon: FileText,
+    accent: 'from-primary/90 via-primary/70 to-chart-2/80',
+    badge: 'Live now',
+    live: true,
+    meta: ['30+ tools', 'AI powered', 'Workspace'],
+  },
+  {
+    name: 'CRM PLATFORM',
+    label: 'Customer Operations',
+    description:
+      'A dedicated customer platform for leads, relationships, pipelines, follow-ups, and business visibility.',
+    href: '#',
+    icon: Network,
+    accent: 'from-chart-2/80 via-chart-4/70 to-primary/70',
+    badge: 'Coming soon',
+    live: false,
+    meta: ['Leads', 'Pipeline', 'Customers'],
+  },
+  {
+    name: 'BUSINESS ANALYTICS',
+    label: 'Insights & Reporting',
+    description:
+      'A future analytics product for dashboards, KPIs, reporting, trends, and decision-ready business intelligence.',
+    href: '#',
+    icon: BarChart3,
+    accent: 'from-chart-4/80 via-chart-1/70 to-chart-2/75',
+    badge: 'Coming soon',
+    live: false,
+    meta: ['KPIs', 'Reports', 'Insights'],
+  },
+  {
+    name: 'OPERATIONS HUB',
+    label: 'Business Workflows',
+    description:
+      'A future operations app for processes, approvals, internal workflows, task orchestration, and automation.',
+    href: '#',
+    icon: Workflow,
+    accent: 'from-chart-5/80 via-chart-4/70 to-primary/75',
+    badge: 'Coming soon',
+    live: false,
+    meta: ['Processes', 'Automation', 'Teams'],
+  },
+];
+
+const platformAreas = [
+  { icon: BriefcaseBusiness, title: 'Business Apps', text: 'Purpose-built products for everyday operations.' },
+  { icon: Store, title: 'Business Websites', text: 'Independent sites and customer-facing experiences.' },
+  { icon: Sparkles, title: 'AI Systems', text: 'Intelligent tools that augment real workflows.' },
+  { icon: Layers3, title: 'Connected Platform', text: 'One hub with room for many independent products.' },
+];
+
+export default function BusinessHubPage() {
   return (
-    <>
-      <Navbar onCommandOpen={cmd.toggle} />
-      <CommandPalette open={cmd.open} onOpenChange={cmd.setOpen} />
-      <main className="flex min-h-screen flex-col">
-        <Hero />
-        <TrustBar />
-        <ToolCategories />
-        <AISection />
-        <Features />
-        <WorkflowPreview />
-        <CTASection />
-        <Footer />
-      </main>
-    </>
-  );
-}
+    <main className="relative min-h-screen overflow-hidden bg-background">
+      <div className="pointer-events-none absolute inset-0 bg-grid opacity-20" />
+      <div className="pointer-events-none absolute left-1/2 top-[-16rem] h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]" />
+      <div className="pointer-events-none absolute right-[-10rem] top-1/3 h-[30rem] w-[30rem] rounded-full bg-chart-4/10 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-[-12rem] left-[-8rem] h-[28rem] w-[28rem] rounded-full bg-chart-2/10 blur-[120px]" />
 
-/* ─── HERO ──────────────────────────────────────────────────────────── */
+      <header className="relative z-20 border-b border-border/40 bg-background/45 backdrop-blur-xl">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
+          <Link href="/" className="group flex min-w-0 items-center gap-3">
+            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-chart-2 text-primary-foreground shadow-lg shadow-primary/20 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105">
+              <Rocket className="h-5 w-5" />
+              <span className="absolute -inset-1 -z-10 rounded-3xl bg-primary/15 blur-md transition-opacity group-hover:opacity-100" />
+            </div>
+            <div className="min-w-0">
+              <div className="font-display truncate text-lg font-bold tracking-tight sm:text-xl">SZ BUSINESS HUB</div>
+              <div className="truncate text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">One platform · many business worlds</div>
+            </div>
+          </Link>
 
-function Hero() {
-  return (
-    <section className="relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-grid opacity-30" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
-      <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
-      <div className="absolute right-0 top-1/4 h-[300px] w-[300px] rounded-full bg-chart-4/10 blur-[100px]" />
-
-      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 lg:px-8 lg:pt-28">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Left: copy */}
-          <div className="flex flex-col items-start">
-            <Badge
-              variant="outline"
-              className="mb-6 gap-1.5 border-primary/20 bg-primary/5 py-1.5 pl-1.5 pr-3 text-primary"
+          <div className="hidden items-center gap-2 sm:flex">
+            <span className="rounded-full border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-primary">
+              Business platform
+            </span>
+            <Link
+              href="/tools"
+              className="group inline-flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 px-3.5 py-2 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:bg-accent"
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15">
-                <Sparkles className="h-3 w-3" />
-              </span>
-              <span className="text-xs font-medium">
-                The document operating system
-              </span>
-            </Badge>
-
-            <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-balance sm:text-6xl lg:text-7xl">
-              Documents,
-              <br />
-              <span className="gradient-text">Reimagined.</span>
-            </h1>
-
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground text-pretty">
-              Convert, edit, automate, and understand your documents with one
-              intelligent workspace. Every tool you need — powered by AI.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button size="lg" className="group h-12 px-7 text-base" asChild>
-                <Link href="/auth">
-                  Start Creating
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-12 px-7 text-base"
-                asChild
-              >
-                <Link href="/tools">
-                  Explore Tools
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-
-            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-success" />
-                Free to start
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-success" />
-                Private &amp; secure
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-success" />
-                30+ tools
-              </span>
-            </div>
-          </div>
-
-          {/* Right: interactive workspace mockup */}
-          <HeroWorkspace />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function HeroWorkspace() {
-  const [activeStep, setActiveStep] = useState(0);
-  const steps = [
-    { icon: Upload, label: 'Upload', color: 'text-primary' },
-    { icon: ScanText, label: 'OCR', color: 'text-chart-2' },
-    { icon: Sparkles, label: 'AI Summary', color: 'text-chart-4' },
-    { icon: FileText, label: 'Download', color: 'text-success' },
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveStep((s) => (s + 1) % (steps.length + 1));
-    }, 1800);
-    return () => clearInterval(interval);
-  }, [steps.length]);
-
-  return (
-    <div className="relative">
-      <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-chart-4/10 blur-2xl" />
-
-      {/* Main card */}
-      <div className="relative rounded-2xl border border-border/60 bg-card/80 p-1 shadow-2xl backdrop-blur-sm">
-        {/* Window chrome */}
-        <div className="flex items-center gap-2 border-b border-border/40 px-4 py-3">
-          <div className="flex gap-1.5">
-            <div className="h-2.5 w-2.5 rounded-full bg-destructive/60" />
-            <div className="h-2.5 w-2.5 rounded-full bg-warning/60" />
-            <div className="h-2.5 w-2.5 rounded-full bg-success/60" />
-          </div>
-          <div className="ml-2 flex-1 truncate rounded-md bg-muted/50 px-3 py-1 text-xs text-muted-foreground">
-            sztools.app/workspace
+              Open SZ TOOLS
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
         </div>
+      </header>
 
-        {/* Workspace body */}
-        <div className="grid grid-cols-3 gap-3 p-4">
-          {/* Thumbnails */}
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className={cn(
-                  'aspect-[3/4] rounded-lg border bg-muted/40 p-2 transition-all',
-                  i === 1 && 'border-primary/40 ring-1 ring-primary/20',
-                )}
-              >
-                <div className="h-full w-full rounded bg-muted/60 p-1.5">
-                  <div className="mb-1 h-1 w-3/4 rounded bg-muted-foreground/20" />
-                  <div className="mb-1 h-1 w-full rounded bg-muted-foreground/15" />
-                  <div className="mb-1 h-1 w-5/6 rounded bg-muted-foreground/15" />
-                  <div className="mb-1 h-1 w-2/3 rounded bg-muted-foreground/10" />
-                  <div className="mb-1 h-1 w-full rounded bg-muted-foreground/15" />
-                  <div className="h-1 w-3/4 rounded bg-muted-foreground/10" />
-                </div>
+      <section className="relative z-10">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 sm:pb-14 sm:pt-14 lg:px-8 lg:pt-20">
+          <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+            <div className="max-w-2xl">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-bold uppercase tracking-[0.16em] text-primary shadow-sm backdrop-blur-md">
+                <Sparkles className="h-3.5 w-3.5" />
+                The business platform
               </div>
-            ))}
-          </div>
 
-          {/* Main preview */}
-          <div className="col-span-2 space-y-3">
-            <div className="aspect-[4/3] rounded-xl border border-border/40 bg-gradient-to-br from-muted/30 to-muted/10 p-4">
-              <div className="mb-3 h-2 w-1/3 rounded bg-muted-foreground/20" />
-              <div className="space-y-1.5">
-                <div className="h-1.5 w-full rounded bg-muted-foreground/15" />
-                <div className="h-1.5 w-5/6 rounded bg-muted-foreground/15" />
-                <div className="h-1.5 w-full rounded bg-muted-foreground/15" />
-                <div className="h-1.5 w-3/4 rounded bg-muted-foreground/10" />
-              </div>
-              <div className="mt-4 grid grid-cols-3 gap-2">
-                <div className="h-8 rounded-lg bg-primary/10" />
-                <div className="h-8 rounded-lg bg-chart-2/10" />
-                <div className="h-8 rounded-lg bg-chart-4/10" />
-              </div>
-              <div className="mt-3 space-y-1.5">
-                <div className="h-1.5 w-full rounded bg-muted-foreground/10" />
-                <div className="h-1.5 w-2/3 rounded bg-muted-foreground/10" />
-              </div>
-            </div>
+              <h1 className="font-display text-5xl font-bold leading-[0.98] tracking-tight text-balance sm:text-6xl lg:text-7xl">
+                One hub.
+                <br />
+                <span className="gradient-text">Many business worlds.</span>
+              </h1>
 
-            {/* Workflow pipeline */}
-            <div className="rounded-xl border border-border/40 bg-muted/30 p-3">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-medium text-muted-foreground">
-                  Active Workflow
+              <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
+                Discover independent business applications, websites, AI systems, and operational tools — all organized inside one scalable platform.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href="#products"
+                  className="group inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25"
+                >
+                  Explore platform
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+                <Link
+                  href="/tools"
+                  className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-card/55 px-5 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:bg-accent"
+                >
+                  Launch SZ TOOLS
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-success shadow-[0_0_10px_hsl(var(--success)/.6)]" />
+                  1 product live
                 </span>
-                <span className="flex items-center gap-1 text-xs text-primary">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-                  Processing
+                <span className="flex items-center gap-2">
+                  <Layers3 className="h-4 w-4" />
+                  Designed for expansion
+                </span>
+                <span className="flex items-center gap-2">
+                  <LockKeyhole className="h-4 w-4" />
+                  Business-ready foundation
                 </span>
               </div>
-              <div className="flex items-center gap-1">
-                {steps.map((step, i) => {
-                  const Icon = step.icon;
-                  const isActive = i === activeStep;
-                  const isDone = i < activeStep;
-                  return (
-                    <div key={i} className="flex items-center gap-1">
-                      <div
-                        className={cn(
-                          'flex h-7 w-7 items-center justify-center rounded-lg border transition-all',
-                          isActive &&
-                            'scale-110 border-primary/40 bg-primary/15 shadow-lg shadow-primary/20',
-                          isDone &&
-                            'border-success/30 bg-success/10',
-                          !isActive &&
-                            !isDone &&
-                            'border-border/40 bg-muted/50',
-                        )}
-                      >
-                        <Icon
-                          className={cn(
-                            'h-3.5 w-3.5 transition-colors',
-                            isActive && step.color,
-                            isDone && 'text-success',
-                            !isActive && !isDone && 'text-muted-foreground/50',
-                          )}
-                        />
-                      </div>
-                      {i < steps.length - 1 && (
-                        <div
-                          className={cn(
-                            'h-px w-4 transition-all',
-                            isDone ? 'bg-success/40' : 'bg-border/40',
-                          )}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Floating AI badge */}
-      <div className="absolute -bottom-4 -left-4 animate-float rounded-xl border border-border/60 bg-card p-3 shadow-xl">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-            <Brain className="h-5 w-5 text-primary" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold">AI Assistant</p>
-            <p className="text-[10px] text-muted-foreground">
-              &ldquo;Summarize this document&rdquo;
-            </p>
-          </div>
-        </div>
-      </div>
+            <div className="relative mx-auto w-full max-w-2xl">
+              <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-primary/10 via-chart-2/5 to-chart-4/10 blur-3xl" />
 
-      {/* Floating compression badge */}
-      <div
-        className="absolute -right-4 top-1/4 animate-float rounded-xl border border-border/60 bg-card p-3 shadow-xl"
-        style={{ animationDelay: '1s' }}
-      >
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-success/10">
-            <Zap className="h-5 w-5 text-success" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold">74% smaller</p>
-            <p className="text-[10px] text-muted-foreground">12.4 MB → 3.2 MB</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ─── TRUST BAR ──────────────────────────────────────────────────────── */
-
-function TrustBar() {
-  return (
-    <section className="border-y border-border/40 bg-muted/20">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-sm text-muted-foreground">
-          <span className="font-medium">Trusted by teams at</span>
-          {['NORTHWIND', 'Acme Co', 'Lumen', 'Vertex', 'Cascade', 'Helix'].map(
-            (name) => (
-              <span
-                key={name}
-                className="font-display text-lg font-bold tracking-tight opacity-40 transition-opacity hover:opacity-70"
-              >
-                {name}
-              </span>
-            ),
-          )}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── TOOL CATEGORIES ───────────────────────────────────────────────── */
-
-function ToolCategories() {
-  return (
-    <section className="py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Every tool you need"
-          title="One workspace. Every document task."
-          subtitle="Six intelligent categories covering everything from creating and converting to protecting and understanding your documents."
-        />
-
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((cat) => {
-            const catTools = getToolsByCategory(cat.id);
-            const Icon = cat.icon;
-            return (
-              <div
-                key={cat.id}
-                className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg"
-              >
-                <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-primary/5 blur-2xl transition-opacity group-hover:opacity-100" />
-
-                <div className="relative">
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted">
-                      <Icon className={cn('h-5.5 w-5.5', cat.accent)} />
-                    </div>
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-card/55 p-2 shadow-2xl backdrop-blur-2xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-primary/[0.05]" />
+                <div className="relative overflow-hidden rounded-[1.55rem] border border-white/10 bg-gradient-to-br from-primary/15 via-background/60 to-chart-4/10 p-6 sm:p-8">
+                  <div className="flex items-center justify-between gap-4">
                     <div>
-                      <h3 className="font-display text-lg font-bold">
-                        {cat.label}
-                      </h3>
-                      <p className="text-xs text-muted-foreground">
-                        {cat.description}
-                      </p>
+                      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Platform overview</div>
+                      <h2 className="mt-1 font-display text-2xl font-bold tracking-tight sm:text-3xl">Your business operating space</h2>
+                    </div>
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <Layers3 className="h-5 w-5" />
                     </div>
                   </div>
 
-                  <div className="space-y-1">
-                    {catTools.slice(0, 5).map((tool) => {
-                      const ToolIcon = tool.icon;
+                  <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {platformAreas.map((area, index) => {
+                      const Icon = area.icon;
                       return (
-                        <Link
-                          key={tool.slug}
-                          href={`/tools/${tool.slug}`}
-                          className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors hover:bg-muted"
+                        <div
+                          key={area.title}
+                          className="group rounded-2xl border border-border/40 bg-background/35 p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:bg-primary/5"
                         >
-                          <ToolIcon className="h-4 w-4 text-muted-foreground" />
-                          <span className="flex-1 font-medium">
-                            {tool.name}
-                          </span>
-                          {tool.badge && (
-                            <Badge
-                              variant="secondary"
-                              className={cn(
-                                'h-5 text-[10px]',
-                                tool.badge === 'ai' &&
-                                  'bg-primary/10 text-primary',
-                                tool.badge === 'new' &&
-                                  'bg-success/10 text-success',
-                                tool.badge === 'beta' &&
-                                  'bg-chart-4/10 text-chart-4',
-                              )}
-                            >
-                              {tool.badge}
-                            </Badge>
-                          )}
-                          <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5" />
-                        </Link>
+                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted/70 transition-transform duration-300 group-hover:scale-110">
+                            <Icon className="h-4.5 w-4.5 text-primary" />
+                          </div>
+                          <p className="mt-3 text-xs font-bold">{area.title}</p>
+                          <p className="mt-1 text-[10px] leading-4 text-muted-foreground">{area.text}</p>
+                          <div className="mt-3 h-1 overflow-hidden rounded-full bg-muted">
+                            <div className="h-full w-2/3 rounded-full bg-primary/60 transition-all duration-500 group-hover:w-full" />
+                          </div>
+                          <span className="mt-2 block text-[9px] font-semibold text-muted-foreground">Layer {index + 1}</span>
+                        </div>
                       );
                     })}
                   </div>
 
-                  <Link
-                    href={`/tools?category=${cat.id}`}
-                    className="mt-3 flex items-center gap-1 text-sm font-medium text-primary hover:gap-2"
-                  >
-                    View all {catTools.length} tools
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── AI SECTION ─────────────────────────────────────────────────────── */
-
-function AISection() {
-  return (
-    <section className="relative overflow-hidden border-y border-border/40 bg-muted/20 py-20 sm:py-28">
-      <div className="absolute left-0 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Left: AI chat mockup */}
-          <div className="order-2 lg:order-1">
-            <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-xl">
-              <div className="mb-4 flex items-center gap-2.5 border-b border-border/40 pb-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-                  <Brain className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold">AI Document Assistant</p>
-                  <p className="text-xs text-success">● Online</p>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                {/* User message */}
-                <div className="flex justify-end">
-                  <div className="max-w-[80%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-sm text-primary-foreground">
-                    What is this contract about?
-                  </div>
-                </div>
-
-                {/* AI response */}
-                <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-muted px-4 py-2.5 text-sm">
-                    This is a 12-month service agreement between Acme Co and
-                    Northwind Inc, effective January 2025. Key terms include a
-                    monthly fee of $4,500, a 30-day termination clause, and
-                    mutual confidentiality obligations.
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      <Badge variant="secondary" className="text-[10px]">
-                        Contract
-                      </Badge>
-                      <Badge variant="secondary" className="text-[10px]">
-                        12 pages
-                      </Badge>
-                      <Badge variant="secondary" className="text-[10px]">
-                        98% confidence
-                      </Badge>
+                  <div className="mt-5 flex items-center gap-3 rounded-2xl border border-primary/15 bg-primary/5 px-4 py-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <Zap className="h-4 w-4" />
                     </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold">Built to add the next product without rebuilding the platform.</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">Each new app can remain independent while living inside the same Hub.</p>
+                    </div>
+                    <div className="hidden h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/.7)] sm:block" />
                   </div>
                 </div>
+              </div>
 
-                {/* User follow-up */}
-                <div className="flex justify-end">
-                  <div className="max-w-[80%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-sm text-primary-foreground">
-                    Find all dates and amounts
+              <div className="absolute -bottom-5 -left-3 hidden animate-float rounded-2xl border border-border/60 bg-card/90 p-3 shadow-xl backdrop-blur-xl sm:block">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-success/10 text-success">
+                    <Cloud className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Architecture</p>
+                    <p className="text-xs font-semibold">Independent products</p>
                   </div>
                 </div>
+              </div>
 
-                {/* AI extraction */}
-                <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-muted px-4 py-2.5 text-sm">
-                    <div className="space-y-1.5">
-                      {[
-                        ['Jan 1, 2025', 'Effective date'],
-                        ['Dec 31, 2025', 'Expiration'],
-                        ['$4,500/mo', 'Monthly fee'],
-                        ['$54,000', 'Annual total'],
-                      ].map(([val, label]) => (
-                        <div
-                          key={val}
-                          className="flex items-center justify-between gap-4 rounded-lg bg-background/60 px-2.5 py-1.5"
-                        >
-                          <span className="font-mono text-xs font-semibold">
-                            {val}
-                          </span>
-                          <span className="text-xs text-muted-foreground">
-                            {label}
-                          </span>
+              <div className="absolute -right-3 top-1/4 hidden animate-float rounded-2xl border border-border/60 bg-card/90 p-3 shadow-xl backdrop-blur-xl sm:block" style={{ animationDelay: '1.2s' }}>
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Rocket className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Platform</p>
+                    <p className="text-xs font-semibold">Ready to expand</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" className="relative z-10 border-t border-border/40 py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+            <div>
+              <div className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-primary">Platform catalog</div>
+              <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">Products inside the Hub</h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">Every card is a doorway to its own business product. The first one is already live; the others are structured as future expansion slots.</p>
+            </div>
+            <div className="rounded-full border border-border/50 bg-card/50 px-3 py-1.5 text-xs font-semibold text-muted-foreground">01 live · 03 planned</div>
+          </div>
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            {products.map((product, index) => {
+              const Icon = product.icon;
+              const card = (
+                <div className="group relative h-full overflow-hidden rounded-[1.7rem] border border-border/60 bg-card/55 p-2 shadow-lg backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-primary/25 hover:shadow-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] via-transparent to-primary/[0.03]" />
+                  <div className={`relative min-h-[270px] overflow-hidden rounded-[1.35rem] bg-gradient-to-br ${product.accent} p-6 text-white sm:min-h-[295px] sm:p-7`}>
+                    <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full border border-white/15 transition-transform duration-700 group-hover:scale-125" />
+                    <div className="absolute -bottom-20 -left-10 h-52 w-52 rounded-full border border-white/10 transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute right-8 top-8 h-2 w-2 rounded-full bg-white/70 shadow-[0_0_16px_rgba(255,255,255,.8)] animate-pulse" />
+
+                    <div className="relative z-10 flex items-start justify-between gap-5">
+                      <div>
+                        <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] backdrop-blur-sm">
+                          <span className={`h-1.5 w-1.5 rounded-full ${product.live ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,.8)]' : 'bg-white/50'}`} />
+                          {product.badge}
                         </div>
+                        <div className="mt-5 flex items-center gap-3">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur-md">
+                            <Icon className="h-6 w-6" />
+                          </div>
+                          <div>
+                            <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-white/70">{product.label}</div>
+                            <h3 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">{product.name}</h3>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="hidden rounded-2xl bg-white/10 p-2.5 backdrop-blur-md sm:block">
+                        {product.live ? <Zap className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                      </div>
+                    </div>
+
+                    <p className="relative z-10 mt-5 max-w-lg text-sm leading-6 text-white/80">{product.description}</p>
+
+                    <div className="relative z-10 mt-6 flex flex-wrap gap-2">
+                      {product.meta.map((meta) => (
+                        <span key={meta} className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white/85 backdrop-blur-sm">{meta}</span>
                       ))}
                     </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Input bar */}
-              <div className="mt-4 flex items-center gap-2 rounded-xl border border-border/60 bg-muted/50 px-3 py-2.5">
-                <Wand2 className="h-4 w-4 text-muted-foreground" />
-                <span className="flex-1 text-sm text-muted-foreground">
-                  Ask anything about your document…
-                </span>
-                <kbd className="rounded border bg-background px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-                  ↵
-                </kbd>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: copy */}
-          <div className="order-1 lg:order-2">
-            <Badge
-              variant="outline"
-              className="mb-4 gap-1.5 border-chart-4/20 bg-chart-4/5 text-chart-4"
-            >
-              <Brain className="h-3 w-3" />
-              AI-Powered
-            </Badge>
-            <h2 className="font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl">
-              Just ask.
-              <br />
-              <span className="gradient-text">Your documents answer.</span>
-            </h2>
-            <p className="mt-5 max-w-md text-lg text-muted-foreground text-pretty">
-              No more hunting for the right tool. Tell SZ TOOLS what you want in
-              plain language — it understands the intent and builds the workflow
-              for you.
-            </p>
-
-            <div className="mt-8 space-y-4">
-              {[
-                {
-                  icon: Sparkles,
-                  title: 'Summarize',
-                  desc: '"Give me a 5-point summary of this report."',
-                },
-                {
-                  icon: GitCompare,
-                  title: 'Compare',
-                  desc: '"What changed between these two versions?"',
-                },
-                {
-                  icon: Languages,
-                  title: 'Translate',
-                  desc: '"Translate this contract into Arabic."',
-                },
-                {
-                  icon: ScanText,
-                  title: 'Extract',
-                  desc: '"Find all names, dates, prices and emails."',
-                },
-              ].map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="flex items-start gap-3.5">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-muted">
-                      <Icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">{item.title}</p>
-                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <div className="relative z-10 mt-7 flex items-center justify-between gap-4">
+                      <span className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-foreground shadow-lg transition-all duration-300 group-hover:gap-3">
+                        {product.live ? 'Open product' : 'Planned product'}
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </span>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">Product {String(index + 1).padStart(2, '0')}</span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-
-            <Button className="mt-8 h-12 px-6" size="lg" asChild>
-              <Link href="/assistant">
-                Try the AI Assistant
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── FEATURES ───────────────────────────────────────────────────────── */
-
-function Features() {
-  const features = [
-    {
-      icon: Layers,
-      title: 'Visual Document Workspace',
-      desc: 'Page thumbnails, drag-to-reorder, rotate, delete, and duplicate — a real editor, not just an upload-result screen.',
-    },
-    {
-      icon: Zap,
-      title: 'Multi-Step Workflows',
-      desc: 'Chain tools into pipelines: upload → OCR → compress → watermark → protect → download. Save and reuse them.',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Privacy-First Architecture',
-      desc: 'Private encrypted storage, signed URLs, automatic cleanup, and a clear &ldquo;delete now&rdquo; — your documents stay yours.',
-    },
-    {
-      icon: Brain,
-      title: 'AI Document Intelligence',
-      desc: 'Summarize, ask questions, extract entities, translate, and analyze — all grounded in your actual document content.',
-    },
-    {
-      icon: FileStack,
-      title: 'Batch Processing',
-      desc: 'Upload 50 files, apply one operation, and download as a ZIP. Individual progress, retry, and download-all.',
-    },
-    {
-      icon: Eye,
-      title: 'Document Comparison',
-      desc: 'Visually diff two documents — added text, removed text, and changed sections with a clear summary.',
-    },
-  ];
-
-  return (
-    <section className="py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Built for professionals"
-          title="More than a PDF converter"
-          subtitle="SZ TOOLS is a complete document platform — built for speed, privacy, and the way modern teams actually work."
-        />
-
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f) => {
-            const Icon = f.icon;
-            return (
-              <div
-                key={f.title}
-                className="group rounded-2xl border border-border/60 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-md"
-              >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-transform group-hover:scale-110">
-                  <Icon className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="mb-2 font-display text-lg font-bold">
-                  {f.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {f.desc}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
+              );
 
-/* ─── WORKFLOW PREVIEW ───────────────────────────────────────────────── */
-
-function WorkflowPreview() {
-  const steps = [
-    { icon: Upload, label: 'Upload', desc: 'Drag & drop your files' },
-    { icon: ScanText, label: 'OCR', desc: 'Recognize text in scans' },
-    { icon: Sparkles, label: 'Remove Blanks', desc: 'Auto-detect empty pages' },
-    { icon: Zap, label: 'Compress', desc: '74% size reduction' },
-    { icon: Lock, label: 'Protect', desc: 'Add password encryption' },
-    { icon: FileText, label: 'Download', desc: 'Get your result' },
-  ];
-
-  return (
-    <section className="border-y border-border/40 bg-muted/20 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Automation"
-          title="Build pipelines, not just files"
-          subtitle="Combine tools into visual multi-step workflows. Configure each step, preview, and execute — then save it for next time."
-        />
-
-        <div className="mt-14 rounded-2xl border border-border/60 bg-card p-6 shadow-xl sm:p-10">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-2">
-            {steps.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <div key={i} className="flex flex-1 items-center gap-2">
-                  <div className="group flex-1 rounded-xl border border-border/40 bg-muted/30 p-4 text-center transition-all hover:border-primary/30 hover:bg-primary/5">
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-transform group-hover:scale-110">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <p className="text-sm font-semibold">{step.label}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {step.desc}
-                    </p>
-                  </div>
-                  {i < steps.length - 1 && (
-                    <ArrowRight className="hidden h-5 w-5 shrink-0 text-muted-foreground/30 lg:block" />
-                  )}
-                </div>
+              return product.live ? (
+                <Link key={product.name} href={product.href} aria-label={`Open ${product.name}`}>
+                  {card}
+                </Link>
+              ) : (
+                <div key={product.name} aria-disabled="true" className="cursor-default opacity-80">{card}</div>
               );
             })}
           </div>
-
-          <div className="mt-6 flex flex-col items-center justify-between gap-4 rounded-xl bg-muted/30 p-4 sm:flex-row">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-success/10">
-                <Check className="h-4 w-4 text-success" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Workflow ready</p>
-                <p className="text-xs text-muted-foreground">
-                  6 steps · Estimated time: ~45s
-                </p>
-              </div>
-            </div>
-            <Button className="h-10">
-              <Zap className="mr-1.5 h-4 w-4" />
-              Execute Workflow
-            </Button>
-          </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
 
-/* ─── CTA SECTION ────────────────────────────────────────────────────── */
-
-function CTASection() {
-  return (
-    <section className="relative overflow-hidden py-20 sm:py-28">
-      <div className="absolute inset-0 bg-grid opacity-20" />
-      <div className="absolute left-1/2 top-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
-
-      <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-        <h2 className="font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl">
-          Ready to rethink how you
-          <br />
-          <span className="gradient-text">work with documents?</span>
-        </h2>
-        <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground text-pretty">
-          Join thousands of professionals using SZ TOOLS to convert, edit, and
-          understand their documents — all in one intelligent workspace.
-        </p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button size="lg" className="h-12 px-7 text-base" asChild>
-            <Link href="/auth">
-              Start Creating — Free
-              <ArrowRight className="ml-2 h-4 w-4" />
+      <section className="relative z-10 border-t border-border/40 py-14 sm:py-20">
+        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <Plus className="h-5 w-5" />
+          </div>
+          <h2 className="mt-5 font-display text-3xl font-bold tracking-tight sm:text-4xl">The Hub is the platform. Each product is its own world.</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">This architecture gives SZ BUSINESS HUB room to grow into a family of independent business applications and websites without turning every product into one giant codebase.</p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/tools" className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:shadow-xl">
+              Launch SZ TOOLS
+              <ArrowRight className="h-4 w-4" />
             </Link>
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="h-12 px-7 text-base"
-            asChild
-          >
-            <Link href="/tools">Browse all tools</Link>
-          </Button>
-        </div>
-        <div className="mt-6 flex items-center justify-center gap-1 text-sm text-muted-foreground">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Star
-              key={i}
-              className="h-4 w-4 fill-warning text-warning"
-            />
-          ))}
-          <span className="ml-2">Rated 4.9/5 by 12,000+ users</span>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── FOOTER ─────────────────────────────────────────────────────────── */
-
-function Footer() {
-  const footerLinks = {
-    Product: ['Tools', 'Pricing', 'AI Assistant', 'Workflows', 'Templates'],
-    Company: ['About', 'Blog', 'Careers', 'Press', 'Contact'],
-    Resources: ['Help Center', 'API Docs', 'Guides', 'Community', 'Status'],
-    Legal: ['Privacy', 'Terms', 'Security', 'GDPR', 'Cookies'],
-  };
-
-  return (
-    <footer className="border-t border-border/40 bg-muted/20">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-6">
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 2h7l5 5v15a0 0 0 0 1 0 0H6a0 0 0 0 1 0 0V2Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M13 2v5h5"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M9 13h6M9 17h4"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-              <span className="font-display text-xl font-bold">SZ TOOLS</span>
+            <Link href="#products" className="inline-flex items-center justify-center gap-2 rounded-xl border border-border/60 bg-card/50 px-5 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:bg-accent">
+              View all products
+              <ChevronRight className="h-4 w-4" />
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-              The future operating system for documents. Convert, edit,
-              automate, and understand — all in one intelligent workspace.
-            </p>
-          </div>
-
-          {/* Links */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="mb-3 text-sm font-semibold">{title}</h4>
-              <ul className="space-y-2">
-                {links.map((link) => (
-                  <li key={link}>
-                    <Link
-                      href="#"
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {link}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/40 pt-8 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © 2025 SZ TOOLS. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-success" />
-              All systems operational
-            </span>
           </div>
         </div>
-      </div>
-    </footer>
-  );
-}
+      </section>
 
-/* ─── SHARED ─────────────────────────────────────────────────────────── */
-
-function SectionHeader({
-  eyebrow,
-  title,
-  subtitle,
-}: {
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-}) {
-  return (
-    <div className="mx-auto max-w-2xl text-center">
-      <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
-        {eyebrow}
-      </p>
-      <h2 className="font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl">
-        {title}
-      </h2>
-      <p className="mt-4 text-lg text-muted-foreground text-pretty">
-        {subtitle}
-      </p>
-    </div>
+      <footer className="relative z-10 border-t border-border/40 py-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <span className="font-semibold">SZ BUSINESS HUB · Business products under one platform</span>
+          <span>Built to expand one independent product at a time.</span>
+        </div>
+      </footer>
+    </main>
   );
 }
