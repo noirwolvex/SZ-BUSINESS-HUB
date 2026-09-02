@@ -24,33 +24,33 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'SZ TOOLS — Documents, Reimagined',
-    template: '%s · SZ TOOLS',
+    default: 'SZ BUSINESS HUB — One Platform, Many Business Worlds',
+    template: '%s · SZ BUSINESS HUB',
   },
   description:
-    'Convert, edit, automate, and understand your documents with one intelligent workspace. The future operating system for documents.',
+    'A business platform for independent applications, websites, AI systems, and operational tools — organized inside one scalable Hub.',
   keywords: [
-    'PDF tools',
-    'merge PDF',
-    'compress PDF',
-    'PDF to Word',
-    'OCR',
-    'document AI',
-    'split PDF',
-    'PDF editor',
+    'business platform',
+    'business apps',
+    'business tools',
+    'CRM',
+    'business analytics',
+    'AI business tools',
+    'document workspace',
+    'SZ BUSINESS HUB',
   ],
-  authors: [{ name: 'SZ TOOLS' }],
+  authors: [{ name: 'SZ BUSINESS HUB' }],
   openGraph: {
-    title: 'SZ TOOLS — Documents, Reimagined',
+    title: 'SZ BUSINESS HUB — One Platform, Many Business Worlds',
     description:
-      'Convert, edit, automate, and understand your documents with one intelligent workspace.',
+      'Discover business applications, websites, AI systems, and operational tools inside one scalable platform.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SZ TOOLS — Documents, Reimagined',
+    title: 'SZ BUSINESS HUB — One Platform, Many Business Worlds',
     description:
-      'Convert, edit, automate, and understand your documents with one intelligent workspace.',
+      'A growing platform for independent business products and digital experiences.',
   },
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
@@ -74,9 +74,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>
     </html>
