@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AuthProvider } from '@/components/auth-provider';
+import FabricImageSafety from '@/components/image-editor/fabric-image-safety';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -74,7 +75,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <FabricImageSafety />
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
