@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, Command, Sparkles, LogOut, User as UserIcon } from 'lucide-react';
+import { Menu, X, Command, Sparkles, LogOut, User as UserIcon, ArrowLeft, BriefcaseBusiness } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useAuth } from '@/components/auth-provider';
@@ -27,43 +27,21 @@ export function Navbar({ onCommandOpen }: { onCommandOpen: () => void }) {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/40 glass">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-2.5">
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
           <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              className="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 2h7l5 5v15a0 0 0 0 1 0 0H6a0 0 0 0 1 0 0V2Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M13 2v5h5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M9 13h6M9 17h4"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
+            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 2h7l5 5v15a0 0 0 0 1 0 0H6a0 0 0 0 1 0 0V2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              <path d="M13 2v5h5" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              <path d="M9 13h6M9 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </div>
-          <span className="font-display text-xl font-bold tracking-tight">
-            SZ TOOLS
-          </span>
+          <span className="font-display text-xl font-bold tracking-tight">SZ TOOLS</span>
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -81,7 +59,20 @@ export function Navbar({ onCommandOpen }: { onCommandOpen: () => void }) {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="hidden items-center gap-1.5 border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 sm:flex"
+          >
+            <Link href="/" aria-label="Return to SZ BUSINESS HUB">
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <BriefcaseBusiness className="h-3.5 w-3.5" />
+              <span>SZ BUSINESS HUB</span>
+            </Link>
+          </Button>
+
           <button
             onClick={onCommandOpen}
             className="hidden items-center gap-2 rounded-lg border border-border/60 bg-muted/50 px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:flex"
@@ -89,25 +80,18 @@ export function Navbar({ onCommandOpen }: { onCommandOpen: () => void }) {
           >
             <Command className="h-3.5 w-3.5" />
             <span>Search</span>
-            <kbd className="rounded border bg-background px-1.5 py-0.5 font-mono text-[10px]">
-              ⌘K
-            </kbd>
+            <kbd className="rounded border bg-background px-1.5 py-0.5 font-mono text-[10px]">⌘K</kbd>
           </button>
 
           <ThemeToggle />
 
           {user ? (
             <div className="hidden items-center gap-2 md:flex">
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm font-medium transition-colors hover:bg-accent"
-              >
+              <Link href="/dashboard" className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm font-medium transition-colors hover:bg-accent">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15">
                   <UserIcon className="h-3.5 w-3.5 text-primary" />
                 </div>
-                <span className="max-w-[140px] truncate text-muted-foreground">
-                  {user.email}
-                </span>
+                <span className="max-w-[140px] truncate text-muted-foreground">{user.email}</span>
               </Link>
               <Button variant="ghost" size="sm" onClick={handleSignOut}>
                 <LogOut className="mr-1.5 h-3.5 w-3.5" />
@@ -116,29 +100,19 @@ export function Navbar({ onCommandOpen }: { onCommandOpen: () => void }) {
             </div>
           ) : (
             <div className="hidden items-center gap-2 md:flex">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/auth">Sign in</Link>
-              </Button>
+              <Button variant="ghost" size="sm" asChild><Link href="/auth">Sign in</Link></Button>
               <Button size="sm" asChild>
-                <Link href="/auth">
-                  <Sparkles className="mr-1.5 h-3.5 w-3.5" />
-                  Get Started
-                </Link>
+                <Link href="/auth"><Sparkles className="mr-1.5 h-3.5 w-3.5" />Get Started</Link>
               </Button>
             </div>
           )}
 
-          {/* Mobile menu button */}
           <button
             className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-accent md:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </nav>
@@ -147,6 +121,16 @@ export function Navbar({ onCommandOpen }: { onCommandOpen: () => void }) {
       {mobileOpen && (
         <div className="border-t bg-background md:hidden">
           <div className="space-y-1 px-4 py-4">
+            <Link
+              href="/"
+              className="flex items-center gap-2 rounded-lg bg-primary/5 px-3 py-2.5 text-sm font-semibold text-primary hover:bg-primary/10"
+              onClick={() => setMobileOpen(false)}
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <BriefcaseBusiness className="h-4 w-4" />
+              SZ BUSINESS HUB
+            </Link>
+
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -157,19 +141,14 @@ export function Navbar({ onCommandOpen }: { onCommandOpen: () => void }) {
                 {link.label}
               </Link>
             ))}
+
             <div className="flex gap-2 pt-3">
               {user ? (
                 <>
                   <Button variant="outline" size="sm" className="flex-1" asChild>
-                    <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
-                      Dashboard
-                    </Link>
+                    <Link href="/dashboard" onClick={() => setMobileOpen(false)}>Dashboard</Link>
                   </Button>
-                  <Button
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => { handleSignOut(); setMobileOpen(false); }}
-                  >
+                  <Button size="sm" className="flex-1" onClick={() => { handleSignOut(); setMobileOpen(false); }}>
                     <LogOut className="mr-1.5 h-3.5 w-3.5" />
                     Sign out
                   </Button>
